@@ -3,7 +3,7 @@ const app = express();
 
 app.use(express.json());
 
-const courses = [
+let courses = [
     { id: 1, name: 'couse1' },
     { id: 2, name: 'couse2' },
     { id: 3, name: 'couse3' },
@@ -40,12 +40,18 @@ app.put('/api/courses/:id', (req, res) => {
 });
 
 app.delete('/api/courses/:id', (req, res) => {
-    const course = courses.find(c => c.id === parseInt(req.params.id));
+    /* const course = courses.find(c => c.id === parseInt(req.params.id));
 
     const index = courses.indexOf(course);
     courses.splice(index, 1);
 
-    res.send(course);
+    res.send(course); */
+
+     courses = courses.filter((item)=>{
+        return item.id != req.params.id;
+    });
+
+    res.send(courses);
 })
 
 const port = process.env.PORT || 3000;
